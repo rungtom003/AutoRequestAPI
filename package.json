@@ -1,0 +1,21 @@
+{
+  "name": "AutoRequestAPI",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon -r esm server.js",
+    "start": "node -r esm server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.26.0",
+    "dotenv": "^16.0.0",
+    "esm": "^3.2.25",
+    "mssql": "^8.0.2",
+    "node-cron": "^3.0.0",
+    "nodemon": "^2.0.15"
+  }
+}
