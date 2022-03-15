@@ -1,8 +1,6 @@
-import {
-    ConnectDB
-} from "./connectDB";
-import axios from "axios";
-import nodecron from "node-cron"
+const { ConnectDB } = require("./connectDB");
+const axios = require("axios");
+const nodecron = require("node-cron")
 
 const AutoRequestAPI = async () => {
     // const branch = ["BWC","BS","CY","KC","KKF","NR"];
@@ -46,7 +44,7 @@ const AutoRequestAPI = async () => {
                     (item) => item.ID_plan === result_api.data[key].ID_plan
                 );
                 if (_result === undefined) {
-                    let map_pmii = mcid_pmii.find((item) =>item.mcid_PMII === result_api.data[key].MCID_PMII);
+                    let map_pmii = mcid_pmii.find((item) => item.mcid_PMII === result_api.data[key].MCID_PMII);
                     sql += `INSERT INTO [dbo].[tb_planPmii]([ID_plan],[mcid],[mcid_pmii],[pm_machine_stop_plan],[Operation_time_pm],[date_create_plan],[date_insert],[date_update]) VALUES('${result_api.data[key].ID_plan}','${map_pmii===undefined?"":map_pmii.mcid}','${result_api.data[key].MCID_PMII}','${result_api.data[key].pm_time}','${result_api.data[key].Operation_time_PM}','${result_api.data[key].time_create}',GETDATE(),GETDATE());\n`;
                 } else {
                     sql += `UPDATE [dbo].[tb_planPmii] SET [pm_machine_stop_plan] = '${result_api.data[key].pm_time}',[Operation_time_pm] = '${result_api.data[key].Operation_time_PM}',[date_create_plan] = '${result_api.data[key].time_create}',[date_update] = GETDATE() WHERE [ID_plan] = '${_result.ID_plan}';\n`
@@ -67,9 +65,17 @@ const AutoRequestAPI = async () => {
 nodecron.schedule('59 11 * * *', () => {
     AutoRequestAPI();
     console.log("Load data pmii to Database success")
+}, {
+    scheduled: true,
+    timezone: "Asia/Bangkok"
 });
 
 nodecron.schedule('59 19 * * *', () => {
     AutoRequestAPI();
     console.log("Load data pmii to Database success")
+}, {
+    scheduled: true,
+    timezone: "Asia/Bangkok"
 });
+
+console.log("Start App...")

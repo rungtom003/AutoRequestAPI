@@ -99,4 +99,4 @@ class ConnectDB {
 
   }
 }
-export { ConnectDB };
+module.exports = { ConnectDB }
