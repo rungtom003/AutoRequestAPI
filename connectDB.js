@@ -81,6 +81,7 @@ class ConnectDB {
         password: DB_PASSWORD,
         database: this.databaseName,
         server: this.DB_IP_CONNECT,
+        requestTimeout : 30000,
         pool: {
           max: 10,
           min: 0,
